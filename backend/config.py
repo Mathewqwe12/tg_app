@@ -8,7 +8,7 @@ load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN', '7364226532:AAH8YmUtoB-PmKLI1DcLUTRx2CRPakw7dzw')
 
 # URL веб-приложения - Обновлено для Vercel
-WEBAPP_URL = os.getenv('WEBAPP_URL', 'https://tg-app-lqswsu2kd-mathews-projects-6af1e42a.vercel.app')
+WEBAPP_URL = os.getenv('WEBAPP_URL', 'https://tg-app-o1fzwzzon-mathews-projects-6af1e42a.vercel.app')
 
 # Настройки сервера
 HOST = os.getenv('HOST', '0.0.0.0')
