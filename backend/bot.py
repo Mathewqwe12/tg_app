@@ -3,6 +3,8 @@
 
 import json
 import logging
+import os
+import datetime
 from telegram import Update, WebAppInfo, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackContext, MessageHandler, Filters
 from flask import Flask, request, jsonify
@@ -82,6 +84,41 @@ def save_user_data(user_id):
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
 
+# Vercel serverless handler
+@app.route('/api/webhook', methods=['POST'])
+def telegram_webhook():
+    """Обработчик вебхуков от Telegram для Vercel"""
+    if request.method == 'POST':
+        update = Update.de_json(request.get_json(force=True), None)
+        updater = get_updater()
+        updater.dispatcher.process_update(update)
+        return jsonify({"success": True})
+    return jsonify({"success": False})
+
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Проверка работоспособности API"""
+    return jsonify({
+        "status": "ok",
+        "version": "1.0.0",
+        "timestamp": str(datetime.datetime.now())
+    })
+
+# Функция для получения экземпляра Updater
+def get_updater():
+    """Получение экземпляра Updater для обработки обновлений"""
+    updater = Updater(BOT_TOKEN)
+    dispatcher = updater.dispatcher
+    
+    # Регистрация обработчиков команд
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(MessageHandler(Filters.text | Filters.status_update.web_app_data, handle_message))
+    
+    # Регистрация обработчика ошибок
+    dispatcher.add_error_handler(error_handler)
+    
+    return updater
+
 def run_flask():
     """Запуск Flask сервера"""
     app.run(host=HOST, port=int(PORT) + 1, debug=False)
@@ -90,16 +127,7 @@ def main():
     """Основная функция для запуска бота"""
     # Инициализация бота
     logger.info(f"Инициализация бота с токеном: {BOT_TOKEN[:5]}...{BOT_TOKEN[-5:]}")
-    updater = Updater(BOT_TOKEN)
-    dispatcher = updater.dispatcher
-    
-    # Регистрация обработчиков команд
-    logger.info("Регистрация обработчиков команд")
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(MessageHandler(Filters.text | Filters.status_update.web_app_data, handle_message))
-    
-    # Регистрация обработчика ошибок
-    dispatcher.add_error_handler(error_handler)
+    updater = get_updater()
     
     # Запуск Flask в отдельном потоке
     flask_thread = threading.Thread(target=run_flask)
@@ -113,6 +141,14 @@ def main():
     
     # Ожидание прерывания
     updater.idle()
+
+# Для Vercel serverless functions
+app.updater = get_updater()
+
+# Дополнительные маршруты для Vercel
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({"message": "Telegram Mini App API Backend"})
 
 if __name__ == '__main__':
     logger.info("Запуск основной функции")
