@@ -5,7 +5,7 @@
 ### Sprint 1: MVP Core Infrastructure 🏃 [(Details)](sprints/sprint_1.md)
 
 **Duration:** March 25 - April 7, 2025
-**Completion:** 25%
+**Completion:** 50%
 
 #### Key Achievements
 
@@ -14,11 +14,13 @@
 - Sprint planning completed
 - Database infrastructure implemented
 - Docker environment configured
+- FastAPI server implemented with CRUD endpoints
+- Telegram authentication integrated
 
 #### Planned Tasks
 
 - [x] [TT-001: PostgreSQL and Database Setup](sprints/sprint_1.md#tt-001-настройка-postgresql-и-базовой-структуры-бд)
-- [ ] [TT-002: FastAPI Server Implementation](sprints/sprint_1.md#tt-002-базовая-реализация-fastapi-сервера)
+- [x] [TT-002: FastAPI Server Implementation](sprints/sprint_1.md#tt-002-базовая-реализация-fastapi-сервера)
 - [ ] [TT-003: Telegram Mini App Development](sprints/sprint_1.md#tt-003-разработка-базовой-версии-mini-app)
 - [ ] [TT-004: Telegram Bot Integration](sprints/sprint_1.md#tt-004-базовая-структура-telegram-бота)
 
@@ -30,6 +32,9 @@
 - PostgreSQL in Docker configured
 - Database schema implemented
 - SQLAlchemy and asyncpg integration completed
+- FastAPI server with CRUD endpoints implemented
+- Telegram authentication integrated
+- CORS configured for telegram.org
 
 ### Sprint 2: Core Features 📋 [(Details)](sprints/sprint_2.md)
 
@@ -78,11 +83,12 @@
 
 ### API Design
 
-- Defined API structure
-- Planned endpoints:
-  - /api/v1/users
-  - /api/v1/accounts
-  - /api/v1/deals
+- ✅ Defined API structure
+- ✅ Implemented endpoints:
+  - /api/v1/auth/telegram
+  - /api/v1/users (CRUD)
+  - /api/v1/accounts (CRUD)
+  - /api/v1/deals (planned)
 
 ## 3. Technical Debt
 
@@ -109,7 +115,7 @@
 
 ### High Priority
 
-- Need to implement Telegram authentication
+- ✅ Implemented Telegram authentication
 - Mini App hosting setup required
 - Bot integration planning needed
 
@@ -144,13 +150,13 @@ To be implemented after Sprint 1
 
 ### Development
 
-- Status: 🟡 Partially Configured
+- Status: 🟢 Basic Setup Complete
 - Completed:
   - ✅ Docker configuration
   - ✅ Database setup
   - ✅ ORM integration
+  - ✅ API server setup
 - Pending:
-  - ❌ API server setup
   - ❌ Local development workflow
   - ❌ Testing environment
 
