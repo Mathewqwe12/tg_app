@@ -1,36 +1,44 @@
 graph TD
 
-%% Telegram Interface
-A[Telegram Bot]
+%% User Interfaces
+A[Telegram Mini App]
+B[Telegram Bot]
 
 %% Backend Services
-B[API Server - FastAPI]
-C[Escrow Service]
-D[Auth & User Management]
-E[Notification Service]
-F[Payment Service<br/>Crypto + Telegram Stars]
+C[API Server - FastAPI]
+D[Escrow Service]
+E[Auth & User Management]
+F[Notification Service]
+G[Payment Service<br/>Crypto + Telegram Stars]
 
 %% Infrastructure
-G[PostgreSQL Database]
-H[Redis Cache]
-I[Message Queue - RabbitMQ, optional]
+H[PostgreSQL Database]
+I[Redis Cache]
+J[Message Queue - RabbitMQ]
 
 %% Admin Tools
-J[Admin Panel]
+K[Admin Panel]
 
 %% Connections
-A -->|Sends Commands| B
-B --> C
-B --> D
-B --> E
-B --> F
-B --> G
-B --> H
-B --> I
+A -->|API Requests| C
+B -->|Commands| C
+A -->|Auth| E
+B -->|Auth| E
+C --> D
+C --> E
+C --> F
 C --> G
-D --> G
-E --> A
-F --> C
-J --> B
-J --> G
-J --> C
+C --> H
+C --> I
+C --> J
+D --> H
+E --> H
+F --> B
+G --> D
+K --> C
+K --> H
+K --> D
+
+%% Mini App specific
+A -->|Web App Data| B
+B -->|Launch| A
