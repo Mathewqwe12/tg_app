@@ -1,13 +1,11 @@
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import Column, Integer, DateTime
 from datetime import datetime
+from sqlalchemy import Column, Integer, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
-class Base(DeclarativeBase):
-    """Базовый класс для всех моделей"""
-    pass
+Base = declarative_base()
 
 class BaseModel(Base):
-    """Базовый класс с общими полями"""
+    """Базовая модель с общими полями"""
     __abstract__ = True
 
     id = Column(Integer, primary_key=True, index=True)
