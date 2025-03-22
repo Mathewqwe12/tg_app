@@ -1,64 +1,71 @@
-# Project Status
+# Статус проекта
 
-## 1. Sprint Status Overview
+## Спринт 1 (75% завершено)
 
-### Sprint 1: MVP Core Infrastructure 🏃 [(Details)](sprints/sprint_1.md)
+### Достижения
+- [x] Настроен FastAPI сервер с базовыми эндпоинтами
+- [x] Реализована авторизация через Telegram
+- [x] Создана базовая версия Mini App
+- [x] Реализован основной функционал для работы с аккаунтами
+- [x] Добавлена интеграция с Telegram Web App SDK
+- [x] Реализован поиск и фильтрация аккаунтов
+- [x] Добавлена пагинация для списка аккаунтов
+- [x] Реализована страница деталей аккаунта
+- [x] Добавлена возможность создания сделок
 
-**Duration:** March 25 - April 7, 2025
-**Completion:** 50%
+### В процессе
+- [ ] Реализация страницы сделок
+- [ ] Добавление уведомлений через бота
+- [ ] Тестирование и отладка
 
-#### Key Achievements
+### API
+- [x] Модели данных
+- [x] CRUD операции
+- [x] Авторизация
+- [x] Валидация
+- [x] Документация
 
-- Project documentation setup
-- Architecture design completed
-- Sprint planning completed
-- Database infrastructure implemented
-- Docker environment configured
-- FastAPI server implemented with CRUD endpoints
-- Telegram authentication integrated
+### Mini App
+- [x] Базовая структура
+- [x] Интеграция с Telegram
+- [x] Главная страница
+- [x] Страница деталей
+- [ ] Страница сделок
+- [ ] Уведомления
 
-#### Planned Tasks
+## Задачи
 
-- [x] [TT-001: PostgreSQL and Database Setup](sprints/sprint_1.md#tt-001-настройка-postgresql-и-базовой-структуры-бд)
-- [x] [TT-002: FastAPI Server Implementation](sprints/sprint_1.md#tt-002-базовая-реализация-fastapi-сервера)
-- [ ] [TT-003: Telegram Mini App Development](sprints/sprint_1.md#tt-003-разработка-базовой-версии-mini-app)
-- [ ] [TT-004: Telegram Bot Integration](sprints/sprint_1.md#tt-004-базовая-структура-telegram-бота)
+### TT-001: Настройка проекта ✅
+- [x] Создать репозиторий
+- [x] Настроить структуру проекта
+- [x] Добавить базовые зависимости
+- [x] Настроить линтеры и форматтеры
 
-#### Technical Accomplishments
+### TT-002: Разработка API ✅
+- [x] Создать модели данных
+- [x] Настроить базу данных
+- [x] Реализовать CRUD операции
+- [x] Добавить авторизацию через Telegram
+- [x] Настроить CORS
+- [x] Добавить валидацию данных
+- [x] Создать документацию API
 
-- Project structure defined
-- Documentation templates created
-- Development environment partially setup
-- PostgreSQL in Docker configured
-- Database schema implemented
-- SQLAlchemy and asyncpg integration completed
-- FastAPI server with CRUD endpoints implemented
-- Telegram authentication integrated
-- CORS configured for telegram.org
+### TT-003: Разработка Mini App 🔄
+- [x] Создать базовую структуру проекта
+- [x] Интегрировать Telegram Web App SDK
+- [x] Реализовать главную страницу
+- [x] Добавить поиск и фильтрацию
+- [x] Реализовать страницу деталей аккаунта
+- [x] Добавить создание сделок
+- [ ] Реализовать страницу сделок
+- [ ] Добавить уведомления
 
-### Sprint 2: Core Features 📋 [(Details)](sprints/sprint_2.md)
-
-**Duration:** April 8 - April 22, 2025
-**Status:** Planning Phase
-
-#### Planned Features
-
-- Account management system
-- Search and filtering
-- Basic payment integration
-- Enhanced security features
-
-### Sprint 3: Enhanced Features ⏱️ [(Details)](sprints/sprint_3.md)
-
-**Duration:** April 23 - May 7, 2025
-**Status:** Initial Planning
-
-#### Planned Features
-
-- Reviews and ratings system
-- Advanced search features
-- Full payment integration
-- Performance optimization
+### TT-004: Тестирование и развертывание ⏳
+- [ ] Написать тесты для API
+- [ ] Протестировать Mini App
+- [ ] Настроить CI/CD
+- [ ] Развернуть на сервере
+- [ ] Провести нагрузочное тестирование
 
 ## 2. Recent Changes
 

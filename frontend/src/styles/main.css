@@ -1,0 +1,538 @@
+/* Основные стили */
+:root {
+  --tg-theme-text-color: var(--tg-theme-text-color, #000000);
+  --tg-theme-hint-color: var(--tg-theme-hint-color, #999999);
+  --tg-theme-link-color: var(--tg-theme-link-color, #2481cc);
+  --tg-theme-button-color: var(--tg-theme-button-color, #2481cc);
+  --tg-theme-button-text-color: var(--tg-theme-button-text-color, #ffffff);
+  --tg-theme-secondary-bg-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
+  --tg-theme-bg-color: var(--tg-theme-bg-color, #ffffff);
+  --container-padding: 16px;
+  --border-radius: 8px;
+}
+
+/* Базовые стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Главная страница */
+.home-page {
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--tg-theme-bg-color);
+}
+
+.header {
+  padding: 16px;
+  background: var(--tg-theme-bg-color);
+  border-bottom: 1px solid var(--tg-theme-hint-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: var(--tg-theme-text-color);
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-input::placeholder {
+  color: var(--tg-theme-hint-color);
+}
+
+.accounts-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* Карточка аккаунта */
+.account-card {
+  background: var(--tg-theme-secondary-bg-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.account-card:active {
+  transform: scale(0.98);
+}
+
+.account-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.account-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account-content {
+  padding: 12px;
+}
+
+.game-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background: var(--tg-theme-bg-color);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tg-theme-text-color);
+  margin-bottom: 8px;
+}
+
+.account-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--tg-theme-text-color);
+  margin: 0 0 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.account-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--tg-theme-button-color);
+  margin-bottom: 8px;
+}
+
+.seller-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--tg-theme-hint-color);
+}
+
+.seller-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  color: #FFD700;
+}
+
+/* Состояние пустого списка */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--tg-theme-hint-color);
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-state h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--tg-theme-text-color);
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin: 0;
+  color: var(--tg-theme-hint-color);
+}
+
+/* Индикатор загрузки */
+.loader {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tg-theme-bg-color);
+  padding: 12px 24px;
+  border-radius: 100px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--tg-theme-button-color);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Сентинел для бесконечной прокрутки */
+.scroll-sentinel {
+  height: 1px;
+  margin-top: -1px;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+  .home-page {
+    padding: 12px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .accounts-list {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .accounts-list {
+    grid-template-columns: 1fr;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .search-input {
+    font-size: 14px;
+  }
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.home-page {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 32px;
+  color: rgba(var(--tg-theme-text-color-rgb), 0.6);
+  font-size: 16px;
+  grid-column: 1 / -1;
+}
+
+/* Страница деталей аккаунта */
+.account-details-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--tg-theme-bg-color);
+}
+
+.details-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+  background: var(--tg-theme-bg-color);
+  border-bottom: 1px solid var(--tg-theme-hint-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.details-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--tg-theme-text-color);
+  margin: 0;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  padding: 8px;
+  margin: -8px;
+  cursor: pointer;
+  color: var(--tg-theme-button-color);
+}
+
+.details-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.account-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.account-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--tg-theme-secondary-bg-color);
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tg-theme-text-color);
+  margin-bottom: 8px;
+}
+
+.account-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--tg-theme-text-color);
+  margin: 0 0 8px;
+}
+
+.price-tag {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--tg-theme-button-color);
+  margin-bottom: 16px;
+}
+
+.account-description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--tg-theme-text-color);
+  margin-bottom: 24px;
+  white-space: pre-wrap;
+}
+
+.seller-info {
+  margin-bottom: 24px;
+}
+
+.seller-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--tg-theme-text-color);
+  margin: 0 0 12px;
+}
+
+.seller-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--tg-theme-secondary-bg-color);
+  border-radius: 12px;
+}
+
+.seller-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--tg-theme-text-color);
+}
+
+.seller-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--tg-theme-text-color);
+}
+
+.star {
+  color: #FFD700;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.primary-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.primary-button:active {
+  opacity: 0.8;
+}
+
+.secondary-button {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--tg-theme-button-color);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--tg-theme-button-color);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.secondary-button:active {
+  background: var(--tg-theme-secondary-bg-color);
+}
+
+.error-message,
+.success-message {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  animation: slide-up 0.3s ease-out;
+  z-index: 100;
+}
+
+.error-message {
+  background: #FF3B30;
+  color: white;
+}
+
+.success-message {
+  background: #34C759;
+  color: white;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+/* Стили для загрузчика */
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  width: 100%;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(var(--tg-theme-text-color-rgb), 0.1);
+  border-top-color: var(--tg-theme-button-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Стили для сообщений об ошибках */
+.error-message {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 59, 48, 0.9);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  animation: slideUp 0.3s ease-out;
+  z-index: 1000;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+/* Стили для бесконечной прокрутки */
+.scroll-sentinel {
+  width: 100%;
+  height: 20px;
+  margin-top: 16px;
+} 
+} 
