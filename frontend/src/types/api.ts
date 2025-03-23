@@ -7,12 +7,11 @@ export interface User {
 
 export interface Account {
   id: number;
-  user: User;
+  user_id: number;
   game: string;
-  title: string;
   description: string;
   price: number;
-  image_url: string;
+  is_available: boolean;
   created_at: string;
   updated_at: string;
 }

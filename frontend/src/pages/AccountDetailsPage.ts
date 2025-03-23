@@ -49,12 +49,12 @@ export class AccountDetailsPage {
     content.className = 'details-content';
     content.innerHTML = `
       <div class="account-image">
-        <img src="${this.account.image_url}" alt="${this.account.title}" />
+        <img src="/images/placeholder.svg" alt="${this.account.game}" />
       </div>
       
       <div class="account-info">
         <div class="game-badge">${this.account.game}</div>
-        <h2 class="account-title">${this.account.title}</h2>
+        <h2 class="account-title">${this.account.description}</h2>
         <div class="price-tag">${this.formatPrice(this.account.price)} ₽</div>
         
         <div class="account-description">
@@ -64,10 +64,10 @@ export class AccountDetailsPage {
         <div class="seller-info">
           <h3>Продавец</h3>
           <div class="seller-card">
-            <div class="seller-name">${this.account.user.username}</div>
+            <div class="seller-name">User ${this.account.user_id}</div>
             <div class="seller-rating">
               <span class="star">⭐</span>
-              ${this.account.user.rating.toFixed(1)}
+              0.0
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@ export class AccountDetailsPage {
     // @ts-ignore - игнорируем ошибку типов для window.Telegram
     const tg = window.Telegram.WebApp as TelegramWebAppWithConfirm;
     tg.showConfirm(
-      `Вы действительно хотите купить аккаунт "${this.account.title}" за ${this.formatPrice(this.account.price)} ₽?`,
+      `Вы действительно хотите купить аккаунт "${this.account.description}" за ${this.formatPrice(this.account.price)} ₽?`,
       async (confirmed: boolean) => {
         if (confirmed) {
           this.isLoading = true;
@@ -144,7 +144,7 @@ export class AccountDetailsPage {
     telegram.hapticImpact('light');
     // @ts-ignore - игнорируем ошибку типов для window.Telegram
     const tg = window.Telegram.WebApp as TelegramWebAppWithConfirm;
-    tg.openTelegramLink(`https://t.me/${this.account.user.username}`);
+    tg.openTelegramLink(`https://t.me/user${this.account.user_id}`);
   }
 
   private showError(message: string): void {

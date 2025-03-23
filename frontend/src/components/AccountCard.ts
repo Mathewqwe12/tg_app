@@ -19,13 +19,13 @@ export function convertApiAccount(apiAccount: ApiAccount): DisplayAccount {
   return {
     id: apiAccount.id,
     game: apiAccount.game,
-    title: apiAccount.title,
+    title: apiAccount.description || `${apiAccount.game} Account`,
     price: apiAccount.price,
-    imageUrl: apiAccount.image_url,
+    imageUrl: '/placeholder.png',
     seller: {
-      id: apiAccount.user.id,
-      name: apiAccount.user.username,
-      rating: apiAccount.user.rating
+      id: apiAccount.user_id,
+      name: `User ${apiAccount.user_id}`,
+      rating: 0
     }
   };
 }

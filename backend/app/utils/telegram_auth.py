@@ -5,6 +5,8 @@ from typing import Dict
 from fastapi import HTTPException, Request
 from dotenv import load_dotenv
 import os
+from ..config import settings
+from jose import jwt
 
 # Загружаем переменные окружения
 load_dotenv()
@@ -60,12 +62,16 @@ async def verify_telegram_auth(request: Request):
     Raises:
         HTTPException: если авторизация не прошла
     """
+    # В режиме разработки пропускаем проверку
+    if settings.ENV == "development":
+        return
+    
     # Пропускаем некоторые эндпоинты без авторизации
     if request.url.path in ["/", "/docs", "/redoc", "/openapi.json"]:
         return
     
     # Получаем данные авторизации из заголовка
-    auth_data = request.headers.get("X-Telegram-Auth")
+    auth_data = request.headers.get("X-Telegram-Auth-Data")
     if not auth_data:
         raise HTTPException(
             status_code=401,

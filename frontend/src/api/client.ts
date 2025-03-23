@@ -52,12 +52,12 @@ class ApiClient {
         },
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.detail || 'Something went wrong');
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Something went wrong');
       }
 
+      const data = await response.json();
       return {
         status: 'success',
         data,

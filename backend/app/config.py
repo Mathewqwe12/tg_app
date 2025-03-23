@@ -1,10 +1,11 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    """Настройки приложения"""
-    database_url: str = "sqlite+aiosqlite:///./trustytrade.db"
-    bot_token: str = ""  # Добавить в .env
-
-    model_config = SettingsConfigDict(env_file=".env")
-
+    ENV: str = "development"
+    DATABASE_URL: str = "sqlite:///./app.db"
+    BOT_TOKEN: str = ""
+    
+    class Config:
+        env_file = ".env"
+        
 settings = Settings() 

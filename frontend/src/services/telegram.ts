@@ -45,6 +45,11 @@ interface TelegramWebApp {
   isExpanded: boolean;
   viewportHeight: number;
   viewportStableHeight: number;
+  setHeaderColor: (color: string) => void;
+  setBackgroundColor: (color: string) => void;
+  themeParams: {
+    bg_color: string;
+  };
 }
 
 declare global {
@@ -56,60 +61,64 @@ declare global {
 }
 
 class TelegramService {
-  private tg: TelegramWebApp;
+  private static instance: TelegramService;
+  private webApp: TelegramWebApp;
 
-  constructor() {
-    // @ts-ignore - игнорируем ошибку типов для window.Telegram
-    this.tg = window.Telegram.WebApp;
+  private constructor() {
+    this.webApp = window.Telegram.WebApp;
     this.init();
+  }
+
+  public static getInstance(): TelegramService {
+    if (!TelegramService.instance) {
+      TelegramService.instance = new TelegramService();
+    }
+    return TelegramService.instance;
   }
 
   private init(): void {
     // Сообщаем Telegram, что приложение готово
-    this.tg.ready();
+    this.webApp.ready();
 
     // Разворачиваем приложение на весь экран
-    this.tg.expand();
-
-    // Включаем подтверждение закрытия
-    this.tg.enableClosingConfirmation();
+    this.webApp.expand();
   }
 
   public hapticImpact(style: 'light' | 'medium' | 'heavy'): void {
-    this.tg.HapticFeedback.impactOccurred(style);
+    this.webApp.HapticFeedback.impactOccurred(style);
   }
 
   public hapticNotification(type: 'error' | 'success' | 'warning'): void {
-    this.tg.HapticFeedback.notificationOccurred(type);
+    this.webApp.HapticFeedback.notificationOccurred(type);
   }
 
   public hapticSelection(): void {
-    this.tg.HapticFeedback.selectionChanged();
+    this.webApp.HapticFeedback.selectionChanged();
   }
 
   public showBackButton(callback: () => void): void {
-    this.tg.BackButton.show();
-    this.tg.BackButton.onClick(callback);
+    this.webApp.BackButton.show();
+    this.webApp.BackButton.onClick(callback);
   }
 
   public hideBackButton(): void {
-    this.tg.BackButton.hide();
+    this.webApp.BackButton.hide();
   }
 
   public showMainButton(text: string, callback: () => void): void {
-    this.tg.MainButton.text = text;
-    this.tg.MainButton.onClick(callback);
-    this.tg.MainButton.show();
+    this.webApp.MainButton.text = text;
+    this.webApp.MainButton.onClick(callback);
+    this.webApp.MainButton.show();
   }
 
   public hideMainButton(): void {
-    this.tg.MainButton.hide();
+    this.webApp.MainButton.hide();
   }
 
   public close(): void {
-    this.tg.close();
+    this.webApp.close();
   }
 }
 
 // Экспортируем единственный экземпляр сервиса
-export const telegram = new TelegramService(); 
+export const telegram = TelegramService.getInstance(); 

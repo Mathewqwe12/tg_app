@@ -1,6 +1,6 @@
 import { api } from '../api/client';
 import { telegram } from '../services/telegram';
-import { AccountCard, DisplayAccount } from '../components/AccountCard';
+import { AccountCard, DisplayAccount, convertApiAccount } from '../components/AccountCard';
 import { AccountDetailsPage } from './AccountDetailsPage';
 import type { Account, PaginatedResponse } from '../types/api';
 
@@ -66,10 +66,10 @@ export class HomePage {
         search: search
       });
 
-      if (response.status === 'success' && response.data) {
-        const data = response.data as unknown as AccountsResponse;
-        this.accounts = this.currentPage === 1 ? data.accounts : [...this.accounts, ...data.accounts];
-        this.hasMore = data.has_more;
+      if (response.status === 'success' && Array.isArray(response.data)) {
+        const accounts = response.data;
+        this.accounts = this.currentPage === 1 ? accounts : [...this.accounts, ...accounts];
+        this.hasMore = accounts.length === 100; // Если получили максимальное количество записей, значит есть ещё
         this.currentPage++;
         this.updateAccountsList();
       } else {
@@ -125,7 +125,7 @@ export class HomePage {
     // Очищаем список
     this.accountsList.innerHTML = '';
 
-    if (this.accounts.length === 0) {
+    if (!this.accounts || this.accounts.length === 0) {
       const emptyState = document.createElement('div');
       emptyState.className = 'empty-state';
       emptyState.innerHTML = `
@@ -139,18 +139,7 @@ export class HomePage {
 
     // Добавляем карточки аккаунтов
     this.accounts.forEach(account => {
-      const displayAccount: DisplayAccount = {
-        id: account.id,
-        game: account.game,
-        title: account.title,
-        price: account.price,
-        imageUrl: account.image_url,
-        seller: {
-          id: account.user.id,
-          name: account.user.username,
-          rating: account.user.rating
-        }
-      };
+      const displayAccount = convertApiAccount(account);
       const card = new AccountCard(displayAccount, () => this.handleAccountClick(account));
       card.mount(this.accountsList);
     });
