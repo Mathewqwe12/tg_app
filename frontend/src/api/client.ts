@@ -13,7 +13,7 @@ import type {
 } from '../types/api';
 
 // Базовый URL API
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'http://localhost:8000/api/v1';
 
 // Интерфейс для параметров запроса аккаунтов
 interface GetAccountsParams {
@@ -34,7 +34,7 @@ class ApiClient {
     // В production будем использовать реальный URL бэкенда
     this.baseUrl = import.meta.env.PROD 
       ? 'https://api.trustytrade.app/api/v1'
-      : 'http://localhost:8000/api/v1';
+      : API_URL;
   }
 
   // Утилиты для работы с API
@@ -43,10 +43,11 @@ class ApiClient {
     options: RequestInit = {}
   ): Promise<{ status: 'success' | 'error'; data?: T; error?: string }> {
     try {
-      const response = await fetch(`${API_URL}${endpoint}`, {
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
         ...options,
         headers: {
           'Content-Type': 'application/json',
+          ...(this.token ? { 'Authorization': `Bearer ${this.token}` } : {}),
           ...options.headers,
         },
       });
